@@ -3,13 +3,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 using weasel.Core;
 
-namespace weasel
-{
+namespace weasel {
     /// <summary>
     ///     Generates a new DynamicAssembly
     /// </summary>
-    internal class AssemblyGenerator : IAssemblyGenerator
-    {
+    internal class AssemblyGenerator : IAssemblyGenerator {
 #if DEBUG
         private const AssemblyBuilderAccess AccessLevel = AssemblyBuilderAccess.RunAndSave;
 #else
@@ -20,8 +18,7 @@ namespace weasel
         ///     Generates a new AssemblyBuilder
         /// </summary>
         /// <returns></returns>
-        public AssemblyBuilder CreateAssembly()
-        {
+        public AssemblyBuilder CreateAssembly() {
             var assemblyName = GetNewAssemblyName();
             return AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AccessLevel);
         }
@@ -31,8 +28,7 @@ namespace weasel
         /// </summary>
         /// <param name="builder">The AssemblyBuilder in which the module should be created</param>
         /// <returns></returns>
-        public ModuleBuilder GetModuleBuilder(AssemblyBuilder builder)
-        {
+        public ModuleBuilder GetModuleBuilder(AssemblyBuilder builder) {
             var assemblyName = builder.GetName();
             return builder.DefineDynamicModule(assemblyName.Name, string.Format("{0}.dll", assemblyName.Name));
         }
@@ -41,8 +37,7 @@ namespace weasel
         ///     Creates an new AssemblyName
         /// </summary>
         /// <returns></returns>
-        private AssemblyName GetNewAssemblyName()
-        {
+        private AssemblyName GetNewAssemblyName() {
             return new AssemblyName(string.Format("weasel.{0}_DYNAMIC", DateTime.Now.ToBinary()));
         }
     }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace weasel.Tests
-{
+namespace weasel.Tests {
     [TestClass]
-    public class UnitTest1
-    {
+    public class UnitTest1 {
         [TestMethod]
-        public void TestMethod1()
-        {
+        public void TestMethod1() {
             var typePool = new TypePool();
             typePool.InitializeDynamicAssembly();
 
@@ -19,27 +16,22 @@ namespace weasel.Tests
         }
     }
 
-    public class ClassToProxy
-    {
+    public class ClassToProxy {
         public int MyIntProperty { get; set; }
 
-        public virtual int MethodShouldBeLogged()
-        {
+        public virtual int MethodShouldBeLogged() {
             return 3;
         }
 
-        public int NonVirtualMethod()
-        {
+        public int NonVirtualMethod() {
             return 3;
         }
     }
 
-    public class ClassToProxyProxy : ClassToProxy
-    {
+    public class ClassToProxyProxy : ClassToProxy {
         public new int MyIntProperty { get; set; }
 
-        public new int NonVirtualMethod()
-        {
+        public new int NonVirtualMethod() {
             return base.NonVirtualMethod();
         }
     }
