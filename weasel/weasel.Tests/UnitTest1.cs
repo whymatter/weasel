@@ -1,38 +1,55 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Linq.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace weasel.Tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
-            var typePool = new TypePool();
-            typePool.InitializeDynamicAssembly();
+            //new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration())
+            //    .ChainInterceptor(null, proxy => proxy.MethodShouldBeLogged(1));
 
-            Assert.AreEqual(42, typePool.CreateProxyOfType(new ClassToProxy()).MethodShouldBeLogged());
+            Methode(t => t.VoidMethod());
+            Methode(t => t.IntMethod(1));
+            Methode(t => t.IntPropertys);
 
-            Assert.AreEqual(3, typePool.CreateProxyOfType(new ClassToProxyProxy()).MethodShouldBeLogged());
+            Expression(t => t.VoidMethod());
+            Expression(t => t.IntMethod(1));
+            Expression(t => t.IntPropertys);
+        }
 
-            Assert.AreEqual(3, new ClassToProxyProxy().NonVirtualMethod());
+        public void Methode(Action<ClassToProxy> t) {}
+        public void Methode<TReturn>(Func<ClassToProxy, TReturn> t) {}
+
+        public void Expression<TReturn>(Expression<Func<ClassToProxy, TReturn>> t)
+        {
+            
+        }
+
+        public void Expression(Expression<Action<ClassToProxy>> t)
+        {
+            
         }
     }
 
     public class ClassToProxy {
-        public int MyIntProperty { get; set; }
+        public int IntPropertys { get; set; }
+        public void VoidMethod() {}
 
-        public virtual int MethodShouldBeLogged() {
-            return 3;
+        public int IntMethod() {
+            return 1;
         }
 
-        public int NonVirtualMethod() {
-            return 3;
+        public int IntMethod(int i) {
+            return 1;
         }
     }
 
     public class ClassToProxyProxy : ClassToProxy {
-        public new int MyIntProperty { get; set; }
-
-        public new int NonVirtualMethod() {
-            return base.NonVirtualMethod();
+        public int NonVirtualMethod() {
+            //return base.NonVirtualMethod();
+            return 1;
         }
     }
 }
