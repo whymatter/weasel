@@ -1,55 +1,36 @@
-﻿using System;
-using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using weasel.Core;
+using weasel.Core.Configuration;
 
 namespace weasel.Tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
-            //new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration())
-            //    .ChainInterceptor(null, proxy => proxy.MethodShouldBeLogged(1));
+            var newProxyBuilder = new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration());
 
-            Methode(t => t.VoidMethod());
-            Methode(t => t.IntMethod(1));
-            Methode(t => t.IntPropertys);
-
-            Expression(t => t.VoidMethod());
-            Expression(t => t.IntMethod(1));
-            Expression(t => t.IntPropertys);
-        }
-
-        public void Methode(Action<ClassToProxy> t) {}
-        public void Methode<TReturn>(Func<ClassToProxy, TReturn> t) {}
-
-        public void Expression<TReturn>(Expression<Func<ClassToProxy, TReturn>> t)
-        {
-            
-        }
-
-        public void Expression(Expression<Action<ClassToProxy>> t)
-        {
-            
+            newProxyBuilder
+                .ChainInterceptor(new Interceptor(), proxy => proxy.GetId())
+                .ChainInterceptor(new Interceptor(), proxy => proxy.Id)
+                .ChainInterceptor(new Interceptor(), proxy => proxy.ProcessData("key:=" + " 1"));
         }
     }
 
+    public class Interceptor : IWeaselInterceptor {
+        
+    }
+
     public class ClassToProxy {
-        public int IntPropertys { get; set; }
-        public void VoidMethod() {}
+        public int Id { get; set; }
 
-        public int IntMethod() {
-            return 1;
-        }
+        public void ProcessData(string key) {}
 
-        public int IntMethod(int i) {
+        public int GetId() {
             return 1;
         }
     }
 
     public class ClassToProxyProxy : ClassToProxy {
-        public int NonVirtualMethod() {
-            //return base.NonVirtualMethod();
-            return 1;
-        }
+
     }
 }

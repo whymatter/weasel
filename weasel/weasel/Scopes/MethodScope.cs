@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace weasel {
+namespace weasel.Scopes {
     /// <summary>
     ///     Encapsulates the IWeaselInterceptor on a Method
     /// </summary>
