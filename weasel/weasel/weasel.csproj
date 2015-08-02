@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyGenerator.cs" />
+    <Compile Include="ModulGenerator.cs" />
     <Compile Include="Core\Configuration\DefaultConfiguration.cs" />
     <Compile Include="Core\Configuration\IWeaselConfiguration.cs" />
-    <Compile Include="Core\IAssemblyGenerator.cs" />
+    <Compile Include="Core\IModulBuilderGenerator.cs" />
     <Compile Include="Core\Exceptions\InvalidScopeExpressionException.cs" />
     <Compile Include="Core\IWeaselInterceptor.cs" />
     <Compile Include="Core\PropertyAccessMethods.cs" />
@@ -58,8 +58,8 @@
     <Compile Include="ProxyProvider.cs" />
     <Compile Include="Core\IProxyScope.cs" />
     <Compile Include="Scopes\PropertyScope.cs" />
+    <Compile Include="TypeGenerator.cs" />
     <Compile Include="TypePool.cs" />
-    <Compile Include="WeaselProxy.cs" />
     <Compile Include="WeaselProxyBuilder.cs" />
   </ItemGroup>
   <ItemGroup />

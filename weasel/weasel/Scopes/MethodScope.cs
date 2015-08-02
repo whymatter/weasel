@@ -42,8 +42,7 @@ namespace weasel.Scopes {
         ///     The Parameter for the ParameterScope
         /// </summary>
         public List<object> ParameterValues {
-            get
-            {
+            get {
                 return _compiledParameters ??
                        (_compiledParameters = _methodParameters.Select(p => new ExpressionEvaluator().Eval(p)).ToList());
             }
