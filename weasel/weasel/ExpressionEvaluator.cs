@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace weasel {
     /// <summary>
-    /// Evaluates an Expression
+    ///     Evaluates an Expression
     /// </summary>
     internal class ExpressionEvaluator {
         public object Eval(Expression expression) {

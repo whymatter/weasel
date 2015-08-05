@@ -1,5 +1,3 @@
 ﻿namespace weasel {
-    internal class TypeGenerator {
-        
-    }
+    internal class TypeGenerator {}
 }

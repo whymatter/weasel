@@ -33,15 +33,14 @@ namespace weasel.Tests {
     }
 
     public class Proxy : ClassToProxy {
-
-        public override int GetHashCode() {
-            return (_original != null ? _original.GetHashCode() : 0);
-        }
-
         private readonly ClassToProxy _original;
 
         public Proxy(ClassToProxy original) {
             _original = original;
+        }
+
+        public override int GetHashCode() {
+            return (_original != null ? _original.GetHashCode() : 0);
         }
 
         public static bool operator ==(Proxy proxy, ClassToProxy classTo) {

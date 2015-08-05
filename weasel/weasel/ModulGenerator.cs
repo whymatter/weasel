@@ -14,37 +14,36 @@ namespace weasel {
         private const AssemblyBuilderAccess AccessLevel = AssemblyBuilderAccess.Run;
 #endif
 
-        /// <summary>
-        /// This is the singleton instance of the IModulBuilderGenerator
-        /// </summary>
-        private static readonly IModulBuilderGenerator ModulBuilderGeneratorInstance = new ModulBuilderGenerator();
-
         private readonly ModuleBuilder _moduleBuilder;
+        private readonly AssemblyBuilder _assemblyBuilder;
 
         /// <summary>
-        /// Get the singleton.
+        ///     Creates the ModulBuilderGenerator.
         /// </summary>
-        /// <returns></returns>
-        public static IModulBuilderGenerator GetAssemblyGenerator() {
-            return ModulBuilderGeneratorInstance;
-        }
-
-        /// <summary>
-        /// Singleton -> No public constructor.
-        /// </summary>
-        private ModulBuilderGenerator() {
+        public ModulBuilderGenerator() {
             // Create the new dynamic assembly
             var assemblyName = GetNewAssemblyName();
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AccessLevel);
-            _moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyName.Name, string.Format("{0}.dll", assemblyName.Name));
+            _assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AccessLevel);
+            _moduleBuilder = _assemblyBuilder.DefineDynamicModule(assemblyName.Name, string.Format("{0}.dll", assemblyName.Name));
         }
 
         /// <summary>
         ///     Returns a ModulBuilder instance.
         /// </summary>
-        /// <returns></returns>
-        public ModuleBuilder GetModuleBuilder() {
-            return _moduleBuilder;
+        /// <returns>ModuleBuilder</returns>
+        public ModuleBuilder ModuleBuilder {
+            get { return _moduleBuilder; }
+        }
+
+        /// <summary>
+        ///     Saves the assembly on disk.
+        ///     Only avaliable if run in Debug Mode.
+        /// </summary>
+        /// <param name="fullPath">The full path, containing filename and extension.</param>
+        public void SaveAssembly(string fullPath) {
+#if DEBUG
+            _assemblyBuilder.Save(fullPath);
+#endif
         }
 
         /// <summary>

@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using weasel.Core;
 using weasel.Core.Exceptions;
 using weasel.Scopes;
 
 namespace weasel {
-    public class WeaselProxyBuilder<TTarget> where TTarget : class {
+    public class WeaselProxyChainBuilder<TTarget> : IWeaselProxyChainBuilder<TTarget> where TTarget : class {
         /// <summary>
         ///     The store for the interceptors added by the ChainInterceptor methods
         /// </summary>
-        private readonly List<ProxyLevel> _proxyLevelStore;
+        private readonly ProxyChain _proxyChain;
 
-        public WeaselProxyBuilder() {
-            _proxyLevelStore = new List<ProxyLevel>();
+        public WeaselProxyChainBuilder() {
+            _proxyChain = new ProxyChain();
         }
 
         /// <summary>
@@ -22,9 +21,9 @@ namespace weasel {
         /// </summary>
         /// <param name="interceptor">The IWeaselInterceptor which should be added to the chain.</param>
         /// <returns></returns>
-        public WeaselProxyBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor) {
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor) {
             // Add a new ProxyLevel with the GlobalSope to the chain
-            _proxyLevelStore.Add(new ProxyLevel(interceptor, new GlobalScope()));
+            _proxyChain.PushProxyLevel(interceptor, new GlobalScope());
             return this;
         }
 
@@ -34,12 +33,8 @@ namespace weasel {
         /// <param name="interceptor">The IWeaselInterceptor which should be added to the chain.</param>
         /// <param name="scope">The MethodScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor,
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor,
             Expression<Action<TTarget>> scope) {
-            if (interceptor == null) {
-                throw new ArgumentNullException("interceptor");
-            }
-
             if (scope == null) {
                 throw new InvalidScopeExpressionException("scope");
             }
@@ -50,7 +45,7 @@ namespace weasel {
                 throw new InvalidScopeExpressionException("scope");
             }
 
-            _proxyLevelStore.Add(new ProxyLevel(interceptor, GetMethodScope(methodExpression)));
+            _proxyChain.PushProxyLevel(interceptor, GetMethodScope(methodExpression));
             return this;
         }
 
@@ -61,7 +56,7 @@ namespace weasel {
         /// <param name="interceptor">The IWeaselInterceptor which should be added to the chain.</param>
         /// <param name="scope">The Function or PropertyScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyBuilder<TTarget> ChainInterceptor<TResult>(IWeaselInterceptor interceptor,
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(IWeaselInterceptor interceptor,
             Expression<Func<TTarget, TResult>> scope) {
             if (interceptor == null) {
                 throw new ArgumentNullException("interceptor");
@@ -91,8 +86,13 @@ namespace weasel {
                 throw new InvalidScopeExpressionException("scope");
             }
 
-            _proxyLevelStore.Add(new ProxyLevel(interceptor, proxyScope));
+            _proxyChain.PushProxyLevel(new ProxyLevel(interceptor, proxyScope));
             return this;
+        }
+
+        public TTarget BuildProxy() {
+            var proxyType = new WeaselProxyTypeBuilder<TTarget>().BuildProxyType(_proxyChain);
+            return new ProxyActivator().CreateInstance<TTarget>(proxyType);
         }
 
         /// <summary>
@@ -102,10 +102,6 @@ namespace weasel {
         /// <returns></returns>
         private MethodScope GetMethodScope(MethodCallExpression methodExpression) {
             return new MethodScope(methodExpression.Method, methodExpression.Arguments);
-        }
-
-        public TTarget BuildProxy() {
-            return null;
         }
     }
 }

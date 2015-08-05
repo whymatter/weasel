@@ -2,7 +2,5 @@
     /// <summary>
     ///     Encapsulates the IWeaselInterceptor on the class
     /// </summary>
-    internal class GlobalScope : IProxyScope {
-        
-    }
+    internal class GlobalScope : IProxyScope {}
 }

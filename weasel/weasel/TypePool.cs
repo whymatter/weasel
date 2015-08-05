@@ -10,7 +10,6 @@ namespace weasel {
         private ModuleBuilder _builder;
         private AssemblyBuilder _dynamicAssemblyBuilder;
         private AssemblyName _dynamicAssemblyName;
-        private ConcurrentDictionary<string, ProxyInstance> _typeStore;
 
         public void InitializeDynamicAssembly() {
             var dynamicAssemblyName = new AssemblyName("weasel.DynamicProxy");

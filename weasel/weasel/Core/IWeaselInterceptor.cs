@@ -1,6 +1,3 @@
-﻿namespace weasel.Core
-{
-    public interface IWeaselInterceptor
-    {
-    }
+﻿namespace weasel.Core {
+    public interface IWeaselInterceptor {}
 }

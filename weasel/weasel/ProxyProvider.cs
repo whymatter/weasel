@@ -5,9 +5,9 @@ namespace weasel {
     ///     His job is the creation of ProxyObjects
     /// </summary>
     public class ProxyProvider {
-        public WeaselProxyBuilder<TTarget> CreateProxy<TTarget>(IWeaselConfiguration configuration)
+        public WeaselProxyChainBuilder<TTarget> CreateProxy<TTarget>(IWeaselConfiguration configuration)
             where TTarget : class {
-            return new WeaselProxyBuilder<TTarget>();
+            return new WeaselProxyChainBuilder<TTarget>();
         }
     }
 }
