@@ -11,7 +11,7 @@ namespace weasel {
         /// <summary>
         ///     Creates a new WeaselProxyTypeBuilder.
         /// </summary>
-        /// <param name="modulBuilderGenerator">The an instance of an IModulBuilderGenerator.</param>
+        /// <param name="modulBuilderGenerator">The instance of an IModulBuilderGenerator.</param>
         public WeaselProxyTypeBuilder(IModulBuilderGenerator modulBuilderGenerator) {
             _modulBuilderGenerator = modulBuilderGenerator;
         }

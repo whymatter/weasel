@@ -10,9 +10,9 @@ namespace weasel {
             try {
                 return Expression.Lambda<Func<object>>(expression).Compile()();
             }
-            catch (Exception exception) {
+            catch (Exception) {
                 //todo
-                return null;
+                throw;
             }
         }
     }

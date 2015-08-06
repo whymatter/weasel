@@ -91,7 +91,7 @@ namespace weasel {
         }
 
         public TTarget BuildProxy() {
-            var proxyType = new WeaselProxyTypeBuilder<TTarget>().BuildProxyType(_proxyChain);
+            var proxyType = new WeaselProxyTypeBuilder<TTarget>(null).BuildProxyType(_proxyChain);
             return new ProxyActivator().CreateInstance<TTarget>(proxyType);
         }
 
