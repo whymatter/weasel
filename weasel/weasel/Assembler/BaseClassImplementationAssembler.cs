@@ -6,7 +6,7 @@ using weasel.Core.Assembler;
 
 namespace weasel.Assembler {
     /// <summary>
-    ///     Assembles a new type, derived from
+    ///     Assembles a new type, derived from the type passsed in the CreateType function.
     /// </summary>
     internal class BaseClassImplementationAssembler : ITypeAssembler {
         private readonly IModulBuilderGenerator _modulBuilderGenerator;
@@ -37,8 +37,7 @@ namespace weasel.Assembler {
         ///     Returns the <c>TypeAttributes</c> for the new proxy class.
         /// </summary>
         /// <returns>TypeAttributes</returns>
-        private TypeAttributes GetTypeAttributes()
-        {
+        private TypeAttributes GetTypeAttributes() {
             return TypeAttributes.Class | TypeAttributes.Public;
         }
     }

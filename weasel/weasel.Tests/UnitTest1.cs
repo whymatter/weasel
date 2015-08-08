@@ -1,29 +1,31 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using weasel.Core;
+using weasel.Core.Configuration;
 
 namespace weasel.Tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
-            //var newProxyBuilder = new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration());
+            var newProxyBuilder = new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration());
 
-            //newProxyBuilder
-            //    .ChainInterceptor(new Interceptor(), proxy => proxy.GetId())
+            newProxyBuilder
+                .ChainInterceptor(proxy => EventLog.WriteEntry("", ""), proxy => proxy.GetId())
+                .ChainInterceptor(() => EventLog.WriteEntry("", ""), proxy => proxy.GetId())
+                //.ChainInterceptor(proxy => EventLog.WriteEntry("", ""), proxy => proxy.ProcessData("k"))
+                .ChainInterceptor(() => EventLog.WriteEntry("", ""), proxy => proxy.ProcessData("k"));
             //    .ChainInterceptor(new Interceptor(), proxy => proxy.Id)
             //    .ChainInterceptor(new Interceptor(), proxy => proxy.ProcessData("key:=" + " 1"));
 
-            var original = new ClassToProxy();
-            ClassToProxy proxy = new Proxy(original);
-
-            Assert.IsTrue(proxy == original);
-            //Assert.IsTrue(original.Equals(proxy));
         }
     }
 
     public class Interceptor : IWeaselInterceptor {}
 
     public class ClassToProxy {
+
+
         public int Id { get; set; }
         public void ProcessData(string key) {}
 

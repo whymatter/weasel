@@ -1,1 +1,37 @@
  - Threadsave
+
+
+ - Proxy from Interface
+  - Just default ctor needed
+
+ - Proxy from BaseClass
+  - All Constructors from BaseClass needed
+
+--> How could an interceptor passed to the proxy class?
+ - As constructor parameter
+
+==> A interceptor implemented in a class implementing a interface
+public cass proxy : classToProxy {
+    IInterceptor _i;
+
+    public ctor(IInterceptor interceptor) {
+        _i = interceptor;	
+    }
+
+    public void methodToProxy() {
+        _i.call();
+    }
+}
+
+==> Just a Func<> as an interceptor
+ public class proxy : classToProxy {
+    Func<> _iFunc;
+
+    public ctor(Func<> interceptorFunc) {
+        _i = interceptor;	
+	}
+
+	public void methodToProxy() {
+	    _iFunc();
+	}
+}

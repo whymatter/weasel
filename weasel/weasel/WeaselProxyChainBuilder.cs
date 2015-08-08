@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using weasel.Core;
 using weasel.Core.Exceptions;
+using weasel.Interceptors;
 using weasel.Scopes;
 
 namespace weasel {
@@ -28,13 +29,34 @@ namespace weasel {
         }
 
         /// <summary>
+        ///     Adds a new interceptor within the defined MethodScope to the interceptor chain.
+        ///     If the interceptor executes the <c>Action</c> get´s called.
+        /// </summary>
+        /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
+        /// <param name="scope">The MethodScope for the interceptor.</param>
+        /// <returns></returns>
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action interceptor, Expression<Action<TTarget>> scope) {
+            return ChainInterceptor(new ActionWithoutParameterInterceptor(interceptor), scope);
+        }
+
+        /// <summary>
+        ///     Adds a new interceptor within the defined MethodScope to the interceptor chain.
+        ///     If the interceptor executes the <c>Action</c> get´s called.
+        /// </summary>
+        /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
+        /// <param name="scope">The MethodScope for the interceptor.</param>
+        /// <returns></returns>
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action<TTarget> interceptor, Expression<Action<TTarget>> scope) {
+            return ChainInterceptor(new ActionWithTargetParameterInterceptor<TTarget>(interceptor), scope);
+        }
+
+        /// <summary>
         ///     Adds a new <c>IWeaselInterceptor</c> with the defined MethodScope to the interceptor chain.
         /// </summary>
         /// <param name="interceptor">The IWeaselInterceptor which should be added to the chain.</param>
         /// <param name="scope">The MethodScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor,
-            Expression<Action<TTarget>> scope) {
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(IWeaselInterceptor interceptor, Expression<Action<TTarget>> scope) {
             if (scope == null) {
                 throw new InvalidScopeExpressionException("scope");
             }
@@ -47,6 +69,32 @@ namespace weasel {
 
             _proxyChain.PushProxyLevel(interceptor, GetMethodScope(methodExpression));
             return this;
+        }
+
+        /// <summary>
+        ///     Adds a new interceptor within the defined MethodScope to the interceptor chain.
+        ///     If the interceptor executes the <c>Action</c> get´s called.
+        /// </summary>
+        /// <typeparam name="TResult">The return type of the scope function.</typeparam>
+        /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
+        /// <param name="scope">The Function or PropertyScope for the interceptor.</param>
+        /// <returns></returns>
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action<TTarget> interceptor, Expression<Func<TTarget, TResult>> scope)
+        {
+            return ChainInterceptor(new ActionWithTargetParameterInterceptor<TTarget>(interceptor), scope);
+        }
+
+        /// <summary>
+        ///     Adds a new interceptor within the defined MethodScope to the interceptor chain.
+        ///     If the interceptor executes the <c>Action</c> get´s called.
+        /// </summary>
+        /// <typeparam name="TResult">The return type of the scope function.</typeparam>
+        /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
+        /// <param name="scope">The Function or PropertyScope for the interceptor.</param>
+        /// <returns></returns>
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action interceptor, Expression<Func<TTarget, TResult>> scope)
+        {
+            return ChainInterceptor(new ActionWithoutParameterInterceptor(interceptor), scope);
         }
 
         /// <summary>
