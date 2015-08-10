@@ -35,7 +35,7 @@ namespace weasel {
         /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
         /// <param name="scope">The MethodScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action interceptor, Expression<Action<TTarget>> scope) {
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(Action interceptor, Expression<Action<TTarget>> scope) {
             return ChainInterceptor(new ActionWithoutParameterInterceptor(interceptor), scope);
         }
 
@@ -46,7 +46,7 @@ namespace weasel {
         /// <param name="interceptor">The action to execute if the interceptor get´s called.</param>
         /// <param name="scope">The MethodScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action<TTarget> interceptor, Expression<Action<TTarget>> scope) {
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor(Action<TTarget> interceptor, Expression<Action<TTarget>> scope) {
             return ChainInterceptor(new ActionWithTargetParameterInterceptor<TTarget>(interceptor), scope);
         }
 
@@ -104,8 +104,7 @@ namespace weasel {
         /// <param name="interceptor">The IWeaselInterceptor which should be added to the chain.</param>
         /// <param name="scope">The Function or PropertyScope for the interceptor.</param>
         /// <returns></returns>
-        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(IWeaselInterceptor interceptor,
-            Expression<Func<TTarget, TResult>> scope) {
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(IWeaselInterceptor interceptor, Expression<Func<TTarget, TResult>> scope) {
             if (interceptor == null) {
                 throw new ArgumentNullException("interceptor");
             }

@@ -42,13 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler\BaseClassImplementationAssembler.cs" />
-    <Compile Include="Assembler\ConstructorAssembler.cs" />
+    <Compile Include="Assembler\BaseClassConstructorAssembler.cs" />
     <Compile Include="Assembler\InterfaceImplementationAssembler.cs" />
     <Compile Include="Core\Assembler\ITypeAssembler.cs" />
     <Compile Include="Core\ITypeNameCreator.cs" />
     <Compile Include="Core\IWeaselProxyChainBuilder.cs" />
     <Compile Include="Core\IProxyChain.cs" />
     <Compile Include="Core\ITimestampProvider.cs" />
+    <Compile Include="FieldInformation.cs" />
     <Compile Include="InterceptorInformation.cs" />
     <Compile Include="Interceptors\ActionWithTargetParameterInterceptor.cs" />
     <Compile Include="Interceptors\ActionWithoutParameterInterceptor.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="TypeGenerator.cs" />
     <Compile Include="TypeNameCreator.cs" />
     <Compile Include="TypePool.cs" />
-    <Compile Include="WeaselProxyTypeBuilder.cs" />
     <Compile Include="WeaselProxyChainBuilder.cs" />
   </ItemGroup>
   <ItemGroup />

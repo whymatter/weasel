@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using weasel.Assembler;
 using weasel.Core;
 using weasel.Core.Assembler;
@@ -21,9 +23,11 @@ namespace weasel {
             _typeNameCreator = typeNameCreator;
         }
 
-        public void GenerateWrappingType(Type typeToWrap) {
+        public void GenerateWrappingType(Type typeToWrap, List<ProxyLevel> proxyLevels) {
             var typeAssembler = GetTypeAssembler(typeToWrap);
             var proxyClass = typeAssembler.CreateType(typeToWrap);
+
+            
         }
 
         /// <summary>
