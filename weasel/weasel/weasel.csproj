@@ -44,7 +44,9 @@
     <Compile Include="Assembler\BaseClassImplementationAssembler.cs" />
     <Compile Include="Assembler\BaseClassConstructorAssembler.cs" />
     <Compile Include="Assembler\InterfaceImplementationAssembler.cs" />
+    <Compile Include="Assembler\PrivateFieldAssembler.cs" />
     <Compile Include="Core\Assembler\ITypeAssembler.cs" />
+    <Compile Include="Core\IFieldAssembler.cs" />
     <Compile Include="Core\ITypeNameCreator.cs" />
     <Compile Include="Core\IWeaselProxyChainBuilder.cs" />
     <Compile Include="Core\IProxyChain.cs" />

@@ -9,34 +9,27 @@ namespace weasel.Tests {
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
-            var newProxyBuilder = new ProxyProvider().CreateProxy<ClassToProxy>(new DefaultConfiguration());
 
-            newProxyBuilder
-                .ChainInterceptor(() => EventLog.WriteEntry("", ""), proxy => proxy.GetId())
-                .ChainInterceptor(proxy => EventLog.WriteEntry("", ""), proxy => proxy.GetId())
-                .ChainInterceptor(new Interceptor(), proxy => proxy.ProcessData("k"))
-                .ChainInterceptor(proxy => EventLog.WriteEntry("", ""), proxy => proxy.ProcessData("k"))
-                .ChainInterceptor(proxy => EventLog.WriteEntry("", ""), proxy => proxy.GetId())
-                //proxy => proxy.ProcessData("k")
-                .ChainInterceptor(() => EventLog.WriteEntry("", ""), proxy => proxy.ProcessData("k"));
+            new TypeGenerator(new ModulBuilderGenerator(), new TypeNameCreator(new TimestampProvider())).GenerateWrappingType(typeof (Bar),
+                null);
 
-            new Bar<Foo>().Run(foo => foo.RunMethod());
-            new Bar<Foo>().Run(foo => foo.RunFunction());
+
+
         }
     }
 
-    internal class Bar<TFoo> {
-        public void Run<TReturn>(Func<TFoo, TReturn> scope) {}
+    public class Bar {
 
-        public void Run(Action<TFoo> scope) {}
+        public Bar(int i, string b) {
+            
+        }
 
-        public void Run(Action scope) {}
     }
 
     internal class Foo {
-        public void RunMethod() {}
-
-        public int RunFunction() {}
+        public Foo() {
+            
+        }
     }
 
     public class Interceptor : IWeaselInterceptor {}

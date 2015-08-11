@@ -26,8 +26,11 @@ namespace weasel {
         public void GenerateWrappingType(Type typeToWrap, List<ProxyLevel> proxyLevels) {
             var typeAssembler = GetTypeAssembler(typeToWrap);
             var proxyClass = typeAssembler.CreateType(typeToWrap);
+            new BaseClassConstructorAssembler(_modulBuilderGenerator, new PrivateFieldAssembler(_typeNameCreator)).CreateConstructor(
+                proxyClass, typeToWrap.GetConstructors().ToList(), new List<Type>());
 
-            
+            proxyClass.CreateType();
+            _modulBuilderGenerator.SaveAssembly("a.dll");
         }
 
         /// <summary>

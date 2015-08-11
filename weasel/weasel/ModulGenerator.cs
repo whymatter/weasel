@@ -51,7 +51,7 @@ namespace weasel {
         /// </summary>
         /// <returns></returns>
         private AssemblyName GetNewAssemblyName() {
-            return new AssemblyName(string.Format("weasel.{0}_DYNAMIC", DateTime.Now.ToBinary()));
+            return new AssemblyName(string.Format("weasel.{0}_DYNAMIC", Math.Abs(DateTime.Now.ToBinary())));
         }
     }
 }

@@ -28,6 +28,14 @@ namespace weasel {
             return this;
         }
 
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action interceptor, Expression<Action<TTarget>> scope) {
+            throw new NotImplementedException();
+        }
+
+        public WeaselProxyChainBuilder<TTarget> ChainInterceptor<TResult>(Action<TTarget> interceptor, Expression<Action<TTarget>> scope) {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         ///     Adds a new interceptor within the defined MethodScope to the interceptor chain.
         ///     If the interceptor executes the <c>Action</c> get´s called.
@@ -138,9 +146,9 @@ namespace weasel {
         }
 
         public TTarget BuildProxy() {
-            var proxyType = new WeaselProxyTypeBuilder<TTarget>(null).BuildProxyType(_proxyChain);
-            return new ProxyActivator().CreateInstance<TTarget>(proxyType);
+            throw new NotImplementedException();
         }
+
 
         /// <summary>
         ///     Returns the <c>MethodScope</c> for the passed <c>MethodCallExpression</c>

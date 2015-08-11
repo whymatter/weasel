@@ -12,7 +12,7 @@ namespace weasel {
         /// </summary>
         /// <returns></returns>
         public string GetTimestampFromNow() {
-            return DateTime.UtcNow.ToBinary().ToString();
+            return Math.Abs(DateTime.UtcNow.ToBinary()).ToString();
         }
     }
 }

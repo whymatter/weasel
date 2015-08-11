@@ -38,7 +38,7 @@ namespace weasel.Assembler {
         /// </summary>
         /// <returns>TypeAttributes</returns>
         private TypeAttributes GetTypeAttributes() {
-            return TypeAttributes.Class | TypeAttributes.Public;
+            return TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.BeforeFieldInit;
         }
     }
 }

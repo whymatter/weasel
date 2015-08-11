@@ -10,5 +10,12 @@ namespace weasel.Core {
         /// </summary>
         /// <returns>ModuleBuilder</returns>
         ModuleBuilder ModuleBuilder { get; }
+
+        /// <summary>
+        ///     Saves the assembly on disk.
+        ///     Only avaliable if run in Debug Mode.
+        /// </summary>
+        /// <param name="fullPath">The full path, containing filename and extension.</param>
+        void SaveAssembly(string fullPath);
     }
 }
