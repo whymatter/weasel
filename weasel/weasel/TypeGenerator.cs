@@ -27,7 +27,7 @@ namespace weasel {
             var typeAssembler = GetTypeAssembler(typeToWrap);
             var proxyClass = typeAssembler.CreateType(typeToWrap);
             new BaseClassConstructorAssembler(_modulBuilderGenerator, new PrivateFieldAssembler(_typeNameCreator)).CreateConstructor(
-                proxyClass, typeToWrap.GetConstructors().ToList(), new List<Type>());
+                proxyClass, typeToWrap.GetConstructors().ToList(), new List<Type>{typeof(int), typeof(AppDomain)});
 
             proxyClass.CreateType();
             _modulBuilderGenerator.SaveAssembly("a.dll");

@@ -20,15 +20,21 @@ namespace weasel.Tests {
 
     public class Bar {
 
-        public Bar(int i, string b) {
-            
+        public Bar(int i, string b)
+        {
+
         }
 
     }
 
-    internal class Foo {
-        public Foo() {
-            
+    internal class Foo : Bar {
+        private int _i;
+        public Foo(int i, string b, int a) : base(i, b) {
+            _i = a;
+        }
+
+        private int z() {
+            return _i;
         }
     }
 
