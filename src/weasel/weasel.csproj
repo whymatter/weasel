@@ -43,14 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembler\BaseClassImplementationAssembler.cs" />
-    <Compile Include="Assembler\BaseClassConstructorAssembler.cs" />
-    <Compile Include="Assembler\InterfaceImplementationAssembler.cs" />
+    <Compile Include="Generator\MethodGenerator.cs" />
+    <Compile Include="Generator\TypeGeneratorStrategies\ClassTypeStrategie.cs" />
+    <Compile Include="Generator\ConstructorGenerator.cs" />
+    <Compile Include="Generator\TypeGeneratorStrategies\InterfaceTypeStrategie.cs" />
     <Compile Include="AssemblyPersistor.cs" />
     <Compile Include="Core\IAssemblyGenerator.cs" />
+    <Compile Include="Core\IConstructorGenerator.cs" />
     <Compile Include="Generator\DynamicAssemblyGenerator.cs" />
     <Compile Include="Generator\PrivateFieldGenerator.cs" />
-    <Compile Include="Core\Assembler\ITypeAssembler.cs" />
+    <Compile Include="Core\Assembler\ITypeGeneratorStrategie.cs" />
     <Compile Include="Core\IFieldAssembler.cs" />
     <Compile Include="Core\ITypeNameCreator.cs" />
     <Compile Include="Core\IWeaselProxyChainBuilder.cs" />
@@ -80,9 +82,10 @@
     <Compile Include="Core\IProxyScope.cs" />
     <Compile Include="Scopes\PropertyScope.cs" />
     <Compile Include="TimestampProvider.cs" />
-    <Compile Include="Generator\ProxyTypeGenerator.cs" />
+    <Compile Include="Generator\TypeGenerator.cs" />
     <Compile Include="TypeNameCreator.cs" />
     <Compile Include="TypePool.cs" />
+    <Compile Include="WeaselInterceptorConfig.cs" />
     <Compile Include="WeaselProxyChainBuilder.cs" />
   </ItemGroup>
   <ItemGroup />

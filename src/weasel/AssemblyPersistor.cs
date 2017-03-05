@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Emit;
+using weasel.Core;
 
 namespace weasel {
     internal class AssemblyPersistor : IAssemblyPersistor {
@@ -9,7 +10,7 @@ namespace weasel {
         /// <param name="builder"></param>
         public void SaveAssembly(AssemblyBuilder builder) {
 #if DEBUG
-            builder.Save(builder.FullName);
+            builder.Save($"{builder.FullName}.dll");
 #endif
         }
     }

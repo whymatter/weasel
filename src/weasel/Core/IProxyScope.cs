@@ -1,3 +1,3 @@
-﻿namespace weasel {
+﻿namespace weasel.Core {
     internal interface IProxyScope {}
 }

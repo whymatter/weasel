@@ -1,4 +1,6 @@
-﻿namespace weasel.Scopes {
+﻿using weasel.Core;
+
+namespace weasel.Scopes {
     /// <summary>
     ///     Encapsulates the IWeaselInterceptor on the class
     /// </summary>
