@@ -3,18 +3,18 @@ using System.Reflection;
 using System.Reflection.Emit;
 using weasel.Core;
 
-namespace weasel.Assembler {
+namespace weasel.Generator {
     /// <summary>
     ///     Defines a new private Field.
     /// </summary>
-    internal class PrivateFieldAssembler : IFieldAssembler {
+    internal class PrivateFieldGenerator : IFieldAssembler {
         private readonly ITypeNameCreator _nameCreator;
 
         /// <summary>
         ///     Creates a new <c>PrivateFieldAssembler</c>.
         /// </summary>
         /// <param name="nameCreator">An implementation of a <c>ITypeNameCreator</c>.</param>
-        public PrivateFieldAssembler(ITypeNameCreator nameCreator) {
+        public PrivateFieldGenerator(ITypeNameCreator nameCreator) {
             _nameCreator = nameCreator;
         }
 
@@ -25,7 +25,14 @@ namespace weasel.Assembler {
         /// <param name="typeOfField">The type of the new Field.</param>
         /// <returns></returns>
         public FieldBuilder DefineField(TypeBuilder proxyClassBuilder, Type typeOfField) {
-            return proxyClassBuilder.DefineField(_nameCreator.CreateNewFieldName(typeOfField), typeOfField, FieldAttributes.Private);
+            var fieldName = _nameCreator.CreateNewFieldName(typeOfField);
+            return proxyClassBuilder.DefineField(fieldName, typeOfField, GetAttributes());
         }
+
+        /// <summary>
+        ///     Returns the attributes for the private field.
+        /// </summary>
+        /// <returns></returns>
+        private static FieldAttributes GetAttributes() => FieldAttributes.Private;
     }
 }

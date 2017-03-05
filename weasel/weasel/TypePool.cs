@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -28,7 +27,7 @@ namespace weasel {
                 throw new ArgumentNullException("target");
             }
 
-            var targetType = typeof (TTarget);
+            var targetType = typeof(TTarget);
 
             var dynamicTypeBuilder = GetNewDynamicClassType(targetType);
             var virtualMethods = GetVirtualMethods(targetType);
@@ -62,7 +61,7 @@ namespace weasel {
         }
 
         private string GetOverriddenMethodName(MethodInfo overriddenMethod) {
-            return string.Format("{0}", overriddenMethod.Name);
+            return $"{overriddenMethod.Name}";
         }
 
         private List<Type> GetMethodParameter(MethodInfo methodInfo) {
@@ -81,7 +80,7 @@ namespace weasel {
         }
 
         private string GetDynamicProxyName(Type targetType) {
-            return string.Format("weasel.DynamicProxy.{0}_DYNAMIC", targetType.Name);
+            return $"weasel.DynamicProxy.{targetType.Name}_DYNAMIC";
         }
 
         private MethodAttributes GetMethodAttributes() {

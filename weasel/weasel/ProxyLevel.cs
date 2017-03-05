@@ -8,11 +8,11 @@ namespace weasel {
 
         public ProxyLevel(IWeaselInterceptor weaselInterceptor, IProxyScope proxyScope) {
             if (weaselInterceptor == null) {
-                throw new ArgumentNullException("weaselInterceptor");
+                throw new ArgumentNullException(nameof(weaselInterceptor));
             }
 
             if (proxyScope == null) {
-                throw new ArgumentNullException("proxyScope");
+                throw new ArgumentNullException(nameof(proxyScope));
             }
 
             _weaselInterceptor = weaselInterceptor;

@@ -10,9 +10,7 @@ namespace weasel {
         /// <summary>
         ///     The single <c>ProxyLevel</c> steps.
         /// </summary>
-        public ReadOnlyCollection<ProxyLevel> ProxyLevels {
-            get { return _proxyLevels.AsReadOnly(); }
-        }
+        public ReadOnlyCollection<ProxyLevel> ProxyLevels => _proxyLevels.AsReadOnly();
 
         /// <summary>
         ///     Pushes a new <c>ProxyLevel</c> into the ProxyLevels.
@@ -20,7 +18,7 @@ namespace weasel {
         /// <param name="newProxyLevel">The new ProxyLevel instance.</param>
         public void PushProxyLevel(ProxyLevel newProxyLevel) {
             if (newProxyLevel == null) {
-                throw new ArgumentNullException("newProxyLevel");
+                throw new ArgumentNullException(nameof(newProxyLevel));
             }
 
             _proxyLevels.Add(newProxyLevel);

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using weasel.Core;
-using weasel.Core.Configuration;
+using weasel.Generator;
 
-namespace weasel.Tests {
+namespace weasel.Test {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
+            var assemblyGenerator = new DynamicAssemblyGenerator();
+            var modulBuilderGenerator = new ModuleGenerator();
+            var timestampProvider = new TimestampProvider();
+            var typeNameCreator = new TypeNameCreator(timestampProvider);
 
-            new TypeGenerator(new ModulBuilderGenerator(), new TypeNameCreator(new TimestampProvider())).GenerateWrappingType(typeof (Bar),
-                null);
-
-
-
+            new ProxyTypeGenerator(modulBuilderGenerator, typeNameCreator)
+                .GenerateWrappingType<Bar>();
         }
     }
 

@@ -29,31 +29,40 @@ namespace weasel.Assembler {
             var privateFields = new List<FieldBuilder>(amountOfInterceptors);
 
             for (var i = 0; i < amountOfInterceptors; i++) {
-                privateFields.Add(_privateFieldAssembler.DefineField(proxyClassBuilder, typeof (IWeaselInterceptor)));
+                privateFields.Add(_privateFieldAssembler.DefineField(proxyClassBuilder, typeof(IWeaselInterceptor)));
             }
 
             foreach (var constructorInfo in constructorInfos) {
-                var baseConstructorTypes = GetConstructorTypes(constructorInfo);
-                var combineTypes = CombineTypes(baseConstructorTypes, amountOfInterceptors);
+                var constructorParameterTypes = GetConstructorTypes(constructorInfo);
+                var parametersWithInterceptors = AddInterceptorTypes(constructorParameterTypes, amountOfInterceptors);
+
                 var constructorBuilder =
-                    proxyClassBuilder.DefineConstructor(GetMethodAttributes(), CallingConventions.HasThis, combineTypes);
+                    proxyClassBuilder.DefineConstructor(GetMethodAttributes(), GetConstructorCallingConvention(), parametersWithInterceptors);
 
                 var constructorIlGenerator = constructorBuilder.GetILGenerator();
 
                 // We have to load the 'this' argument from index 0 first
                 constructorIlGenerator.Emit(OpCodes.Ldarg_0);
-                
-                for (var i = 0; i < baseConstructorTypes.Count; i++) {
-                    constructorIlGenerator.Emit(OpCodes.Ldarg, i + 1);
+
+                // Load every constructor parameter to the stack
+                for (var i = 1; i < constructorParameterTypes.Count; i++) {
+                    constructorIlGenerator.Emit(OpCodes.Ldarg, i);
                 }
 
+                // Call base constructor
                 constructorIlGenerator.Emit(OpCodes.Call, constructorInfo);
 
                 for (var i = 0; i < amountOfInterceptors; i++) {
-                    var methodArgumentIndex = baseConstructorTypes.Count + 1 + i;
+                    var baseParameterCount = constructorParameterTypes.Count;
+                    var methodArgumentIndex = baseParameterCount + 1 + i;
+
                     // We have to load the 'this' argument from index 0 first
                     constructorIlGenerator.Emit(OpCodes.Ldarg_0);
+
+                    // Load interceptor
                     constructorIlGenerator.Emit(OpCodes.Ldarg, methodArgumentIndex);
+
+                    // Assign to field
                     constructorIlGenerator.Emit(OpCodes.Stfld, privateFields[i]);
                 }
 
@@ -61,16 +70,16 @@ namespace weasel.Assembler {
             }
         }
 
-        internal List<Type> GetConstructorTypes(ConstructorInfo constructorInfo) {
+        private List<Type> GetConstructorTypes(ConstructorInfo constructorInfo) {
             return constructorInfo.GetParameters().Select(parameter => parameter.ParameterType).ToList();
         }
 
-        internal Type[] CombineTypes(List<Type> baseConstructorTypes, int amountOfInterceptors) {
-            return baseConstructorTypes.Concat(Enumerable.Repeat(typeof (IWeaselInterceptor), amountOfInterceptors)).ToArray();
+        private Type[] AddInterceptorTypes(List<Type> baseConstructorTypes, int amountOfInterceptors) {
+            return baseConstructorTypes.Concat(Enumerable.Repeat(typeof(IWeaselInterceptor), amountOfInterceptors)).ToArray();
         }
 
-        internal MethodAttributes GetMethodAttributes() {
-            return MethodAttributes.Public | MethodAttributes.HideBySig;
-        }
+        private MethodAttributes GetMethodAttributes() => MethodAttributes.Public | MethodAttributes.HideBySig;
+
+        private static CallingConventions GetConstructorCallingConvention() => CallingConventions.HasThis;
     }
 }

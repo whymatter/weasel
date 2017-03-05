@@ -29,7 +29,7 @@ namespace weasel.Assembler {
         /// <returns></returns>
         public TypeBuilder CreateType(Type interfaceForWrapping) {
             var typeName = _typeNameCreator.CreateNewTypeName(interfaceForWrapping);
-            return _modulBuilderGenerator.ModuleBuilder.DefineType(typeName, GetTypeAttributes(), null, new[] { interfaceForWrapping });
+            return _modulBuilderGenerator.ModuleBuilder.DefineType(typeName, GetTypeAttributes(), null, new[] {interfaceForWrapping});
         }
 
         /// <summary>

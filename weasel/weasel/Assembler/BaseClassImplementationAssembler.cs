@@ -9,7 +9,7 @@ namespace weasel.Assembler {
     ///     Assembles a new type, derived from the type passsed in the CreateType function.
     /// </summary>
     internal class BaseClassImplementationAssembler : ITypeAssembler {
-        private readonly IModulBuilderGenerator _modulBuilderGenerator;
+        private readonly IModuleGenerator _modulBuilderGenerator;
         private readonly ITypeNameCreator _typeNameCreator;
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace weasel.Assembler {
         /// </summary>
         /// <param name="typeNameCreator"></param>
         /// <param name="modulBuilderGenerator"></param>
-        public BaseClassImplementationAssembler(ITypeNameCreator typeNameCreator, IModulBuilderGenerator modulBuilderGenerator) {
+        public BaseClassImplementationAssembler(ITypeNameCreator typeNameCreator, IModuleGenerator modulBuilderGenerator) {
             _typeNameCreator = typeNameCreator;
             _modulBuilderGenerator = modulBuilderGenerator;
         }
