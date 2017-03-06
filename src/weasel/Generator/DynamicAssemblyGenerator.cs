@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core;
+using weasel.Core.Generator;
 
 namespace weasel.Generator {
     internal class DynamicAssemblyGenerator : IAssemblyGenerator {

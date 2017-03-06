@@ -5,21 +5,20 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using weasel.Core;
 using weasel.Generator;
 
 namespace weasel.Test {
     [TestClass]
     public class UnitTest1 {
-        public delegate void BeforeInterceptor(params object[] parameters);
-
-        private static void Inter(params object[] zz) {}
-
-
         [TestMethod]
         public void TestMethod1() {
             var configs = new List<WeaselInterceptorConfig> {
-                new WeaselInterceptorConfig(typeof(Action<string, int>), 1, typeof(Bar).GetMethod(nameof(Bar.abc)))
+                new WeaselInterceptorConfig(typeof(Action<string, int>), InterceptorTypes.AfterCall, 1,
+                    typeof(Bar).GetMethod(nameof(Bar.abc))),
+                new WeaselInterceptorConfig(typeof(Action<string, int, Exception>), InterceptorTypes.OnException, 1,
+                    typeof(Bar).GetMethod(nameof(Bar.abc))),
+                new WeaselInterceptorConfig(typeof(Action<string, int, int>), InterceptorTypes.BeforeReturn, 1,
+                    typeof(Bar).GetMethod(nameof(Bar.abc)))
             };
 
             var typeToWrap = typeof(Bar);
@@ -42,7 +41,7 @@ namespace weasel.Test {
             var constructorBuilder = new ConstructorGenerator();
 
             var privateFieldBuilders = configs
-                .Select(config => privateFieldGenerator.DefineField(wrappingType, config.InterceptorType))
+                .Select(config => privateFieldGenerator.DefineField(wrappingType, config.Interceptor))
                 .ToList();
 
             constructorBuilder.CreateConstructor(wrappingType, typeToWrap.GetConstructors().ToList(), privateFieldBuilders);
@@ -51,7 +50,7 @@ namespace weasel.Test {
                 .Select(config => new MethodGenerator.MethodGeneratorInfo(
                     config,
                     privateFieldBuilders
-                        .Single(f => f.FieldType == config.InterceptorType)));
+                        .Single(f => f.FieldType == config.Interceptor)));
 
             var methodGenerator = new MethodGenerator();
 
@@ -63,22 +62,32 @@ namespace weasel.Test {
                 if (!m.IsVirtual) {
                     throw new Exception($"Can't proxy non virtual method: {m.DeclaringType?.FullName}.{m}");
                 }
-                
+
                 methodGenerator.GenerateMethod(wrappingType, m, concernedMethodGeneratorInfos);
             });
 
 
             var proxy = wrappingType.CreateType();
 
-            var proxyInstance = (Bar)Activator.CreateInstance(proxy, 1, "test", new Action<string, int>((s, i) => Debug.WriteLine($"{s}, {i}")));
+            var proxyInstance = (Bar) Activator.CreateInstance(proxy, 1, "test",
+                new Action<string, int>((s, i) => Debug.WriteLine($"Called with: {s}, {i}")),
+                new Action<string, int, Exception>((s, i, e) => Debug.WriteLine($"Exception: {e}")),
+                new Action<string, int, int>((s, i, r) => Debug.WriteLine($"Return value: {r}")));
 
             var persitor = new AssemblyPersistor();
             persitor.SaveAssembly(proxyAssembly);
 
 
-            var expected = proxyInstance.abc("test", 77);
+            var expected = proxyInstance.abc("test", 01);
+
+            try {
+                expected = proxyInstance.abc("test", 77);
+            }
+            catch (Exception e) {}
+
+
             var fooInstance = new Foo(1, "");
-            Assert.AreEqual(77, expected);
+            Assert.AreEqual(1, expected);
 
             SetUp<int>
                 .CreateSetUp<Bar>()
@@ -92,22 +101,24 @@ namespace weasel.Test {
         public Bar(int i, string b) {}
 
         public virtual int abc(string bvg, int m) {
+            if (m == 77) {
+                throw new NotImplementedException("this is not wanted!");
+            }
+
             return m;
         }
     }
 
     internal class Foo : Bar {
-        private Action<string, int> _a1 = A1;
+        private readonly Action<string, int> _a1 = A1;
 
-        private static void A1(string s, int i) {
-            
-        }
+        private static void A1(string s, int i) {}
 
         public Foo(int i, string b) : base(i, b) {}
 
         public override int abc(string bvg, int m) {
-            _a1(bvg, m);
-            base.abc(bvg, m);
+            //_a1(bvg, m);
+            var a = base.abc(bvg, m);
             return 7;
         }
     }
@@ -133,10 +144,6 @@ namespace weasel.Test {
         //}
 
         public void Setup<TArg1, TArg2, TResult>(Func<TArg1, TArg2, TResult> target, Func<TArg1, TArg2> interceptor) {}
-    }
-
-    public class Interceptor<T1, T2> : IWeaselInterceptor {
-        public void Intercept(T1 p1, T2 p2) {}
     }
 
     public class ClassToProxy {

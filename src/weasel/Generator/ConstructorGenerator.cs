@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core;
+using weasel.Core.Generator;
 
 namespace weasel.Generator {
     /// <summary>
@@ -15,7 +15,7 @@ namespace weasel.Generator {
         /// </summary>
         /// <param name="typeBuilder">The <see cref="TypeBuilder"/> for the proxy class.</param>
         /// <param name="constructorInfos">All existing <see cref="ConstructorInfo"/>'s on the class to proxy.</param>
-        /// <param name="interceptors">The fields of <see cref="IWeaselInterceptor"/>.</param>
+        /// <param name="interceptors">The fields of all interceptors.</param>
         public void CreateConstructor(TypeBuilder typeBuilder, List<ConstructorInfo> constructorInfos,
             List<FieldBuilder> interceptors) {
             if (constructorInfos.Any()) {
@@ -44,11 +44,11 @@ namespace weasel.Generator {
         }
 
         /// <summary>
-        /// Assigns all <see cref="IWeaselInterceptor"/>'s passed into the constructor to their private fields.
+        /// Assigns all interceptors passed into the constructor to their private fields.
         /// </summary>
-        /// <param name="offset">Amount of other parameters before the <see cref="IWeaselInterceptor"/>'s.</param>
+        /// <param name="offset">Amount of other parameters before the interceptors.</param>
         /// <param name="constructorIlGenerator">The <see cref="ILGenerator"/> for the constructor.</param>
-        /// <param name="privateFields">All <see cref="FieldBuilder"/> for the <see cref="IWeaselInterceptor"/>'s.</param>
+        /// <param name="privateFields">All <see cref="FieldBuilder"/> for the interceptors.</param>
         private void CreateInterceptorAssignBlock(int offset, ILGenerator constructorIlGenerator,
             IReadOnlyList<FieldBuilder> privateFields) {
             for (var i = 0; i < privateFields.Count; i++) {

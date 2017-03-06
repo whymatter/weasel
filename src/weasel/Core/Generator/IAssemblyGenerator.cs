@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Emit;
 
-namespace weasel.Core {
+namespace weasel.Core.Generator {
     internal interface IAssemblyGenerator {
         /// <summary>
         ///     Generates a new assembly.

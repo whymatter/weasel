@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace weasel.Core {
+namespace weasel.Core.Generator {
     /// <summary>
     ///     Used to create Fields.
     /// </summary>
-    internal interface IFieldAssembler {
+    internal interface IFieldGenerator {
         /// <summary>
         ///     Defines a new private Field.
         /// </summary>

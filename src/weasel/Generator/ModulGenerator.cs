@@ -1,7 +1,7 @@
 ﻿using System.Reflection.Emit;
-using weasel.Core;
+using weasel.Core.Generator;
 
-namespace weasel {
+namespace weasel.Generator {
     /// <summary>
     ///     Generates a new DynamicAssembly.
     /// </summary>

@@ -2,12 +2,13 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using weasel.Core;
+using weasel.Core.Generator;
 
 namespace weasel.Generator {
     /// <summary>
     ///     Defines a new private Field.
     /// </summary>
-    internal class PrivateFieldGenerator : IFieldAssembler {
+    internal class PrivateFieldGenerator : IFieldGenerator {
         private readonly ITypeNameCreator _nameCreator;
 
         /// <summary>

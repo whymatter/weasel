@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace weasel.Core.Assembler {
+namespace weasel.Core.Generator {
     internal interface ITypeGeneratorStrategie {
         /// <summary>
         ///     Assembles a new type.

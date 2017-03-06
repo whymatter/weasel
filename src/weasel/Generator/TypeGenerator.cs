@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Reflection.Emit;
 using weasel.Core;
-using weasel.Core.Assembler;
+using weasel.Core.Generator;
 using weasel.Generator.TypeGeneratorStrategies;
 
 namespace weasel.Generator {
     /// <summary>
     ///     Is used to generate a new Type warpping the TargetType.
     /// </summary>
-    internal class TypeGenerator {
+    internal class TypeGenerator : ITypeGenerator {
         private readonly ITypeNameCreator _typeNameCreator;
 
         /// <summary>

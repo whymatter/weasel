@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using weasel.Core;
-using weasel.Core.Assembler;
+using weasel.Core.Generator;
 
 namespace weasel.Generator.TypeGeneratorStrategies {
     /// <summary>
