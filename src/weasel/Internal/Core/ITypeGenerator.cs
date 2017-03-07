@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace weasel.Core {
+namespace weasel.Internal.Core {
     internal interface ITypeGenerator {
         /// <summary>
         ///     Creates a new type which is wrapping the <param name="typeToWrap"></param>.

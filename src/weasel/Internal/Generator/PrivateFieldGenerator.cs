@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core;
-using weasel.Core.Generator;
+using weasel.Internal.Core;
+using weasel.Internal.Core.Generator;
 
-namespace weasel.Generator {
+namespace weasel.Internal.Generator {
     /// <summary>
     ///     Defines a new private Field.
     /// </summary>

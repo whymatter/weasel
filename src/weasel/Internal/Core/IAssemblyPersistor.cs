@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Emit;
 
-namespace weasel.Core {
+namespace weasel.Internal.Core {
     internal interface IAssemblyPersistor {
         /// <summary>
         ///     Saves the assembly on disk.

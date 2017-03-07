@@ -1,4 +1,4 @@
-﻿namespace weasel.Core {
+﻿namespace weasel.Internal.Core {
     internal interface ITimestampProvider {
         /// <summary>
         ///     Creates a new timestamp with the current time.

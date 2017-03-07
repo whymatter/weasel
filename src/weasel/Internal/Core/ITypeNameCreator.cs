@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace weasel.Core {
+namespace weasel.Internal.Core {
     internal interface ITypeNameCreator {
         /// <summary>
         ///     Creates a new name for the proxy class, proxing the typeToWrap.

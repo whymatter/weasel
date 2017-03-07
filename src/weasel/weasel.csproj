@@ -43,30 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ITypeGenerator.cs" />
-    <Compile Include="Core\Generator\IMethodGenerator.cs" />
-    <Compile Include="Generator\MethodGenerator.cs" />
-    <Compile Include="Generator\TypeGeneratorStrategies\ClassTypeStrategie.cs" />
-    <Compile Include="Generator\ConstructorGenerator.cs" />
-    <Compile Include="Generator\TypeGeneratorStrategies\InterfaceTypeStrategie.cs" />
-    <Compile Include="AssemblyPersistor.cs" />
-    <Compile Include="Core\Generator\IAssemblyGenerator.cs" />
-    <Compile Include="Core\Generator\IConstructorGenerator.cs" />
-    <Compile Include="Generator\DynamicAssemblyGenerator.cs" />
-    <Compile Include="Generator\PrivateFieldGenerator.cs" />
-    <Compile Include="Core\Generator\ITypeGeneratorStrategie.cs" />
-    <Compile Include="Core\Generator\IFieldGenerator.cs" />
-    <Compile Include="Core\ITypeNameCreator.cs" />
-    <Compile Include="Core\ITimestampProvider.cs" />
-    <Compile Include="Core\IAssemblyPersistor.cs" />
-    <Compile Include="Generator\ModulGenerator.cs" />
-    <Compile Include="Core\Generator\IModuleGenerator.cs" />
-    <Compile Include="InterceptorTypes.cs" />
+    <Compile Include="Internal\Core\ITypeGenerator.cs" />
+    <Compile Include="Internal\Core\Generator\IMethodGenerator.cs" />
+    <Compile Include="Internal\Generator\MethodGenerator.cs" />
+    <Compile Include="Internal\Generator\TypeGeneratorStrategies\ClassTypeStrategie.cs" />
+    <Compile Include="Internal\Generator\ConstructorGenerator.cs" />
+    <Compile Include="Internal\Generator\TypeGeneratorStrategies\InterfaceTypeStrategie.cs" />
+    <Compile Include="Internal\AssemblyPersistor.cs" />
+    <Compile Include="Internal\Core\Generator\IAssemblyGenerator.cs" />
+    <Compile Include="Internal\Core\Generator\IConstructorGenerator.cs" />
+    <Compile Include="Internal\Generator\DynamicAssemblyGenerator.cs" />
+    <Compile Include="Internal\Generator\PrivateFieldGenerator.cs" />
+    <Compile Include="Internal\Core\Generator\ITypeGeneratorStrategie.cs" />
+    <Compile Include="Internal\Core\Generator\IFieldGenerator.cs" />
+    <Compile Include="Internal\Core\ITypeNameCreator.cs" />
+    <Compile Include="Internal\Core\ITimestampProvider.cs" />
+    <Compile Include="Internal\Core\IAssemblyPersistor.cs" />
+    <Compile Include="Internal\Generator\ModulGenerator.cs" />
+    <Compile Include="Internal\Core\Generator\IModuleGenerator.cs" />
+    <Compile Include="Internal\InterceptorTypes.cs" />
+    <Compile Include="Internal\ProxyBuilder.cs" />
+    <Compile Include="IProxyBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimestampProvider.cs" />
-    <Compile Include="Generator\TypeGenerator.cs" />
-    <Compile Include="TypeNameCreator.cs" />
-    <Compile Include="WeaselInterceptorConfig.cs" />
+    <Compile Include="Internal\TimestampProvider.cs" />
+    <Compile Include="Internal\Generator\TypeGenerator.cs" />
+    <Compile Include="Internal\TypeNameCreator.cs" />
+    <Compile Include="Internal\WeaselInterceptorConfig.cs" />
+    <Compile Include="ProxyCollection.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

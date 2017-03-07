@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core.Generator;
+using weasel.Internal.Core.Generator;
 
-namespace weasel.Generator {
+namespace weasel.Internal.Generator {
     /// <summary>
     ///     Assembles the constructors for the proxy and calls all base constructor.
     /// </summary>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core;
-using weasel.Core.Generator;
+using weasel.Internal.Core;
+using weasel.Internal.Core.Generator;
 
-namespace weasel.Generator.TypeGeneratorStrategies {
+namespace weasel.Internal.Generator.TypeGeneratorStrategies {
     /// <summary>
     ///     Assembles a new type implementing the defined interface.
     /// </summary>

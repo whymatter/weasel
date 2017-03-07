@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace weasel.Core.Generator {
+namespace weasel.Internal.Core.Generator {
     /// <summary>
     /// Strategie to generate a constructor for a proxy type.
     /// </summary>

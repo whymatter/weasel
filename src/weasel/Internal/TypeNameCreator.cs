@@ -1,7 +1,7 @@
 ﻿using System;
-using weasel.Core;
+using weasel.Internal.Core;
 
-namespace weasel {
+namespace weasel.Internal {
     internal class TypeNameCreator : ITypeNameCreator {
         private readonly ITimestampProvider _timestampProvider;
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core.Generator;
+using weasel.Internal.Core.Generator;
 
-namespace weasel.Generator {
+namespace weasel.Internal.Generator {
     internal class DynamicAssemblyGenerator : IAssemblyGenerator {
 #if DEBUG
         private const AssemblyBuilderAccess AccessLevel = AssemblyBuilderAccess.RunAndSave;

@@ -1,7 +1,7 @@
 ﻿using System.Reflection.Emit;
-using weasel.Core;
+using weasel.Internal.Core;
 
-namespace weasel {
+namespace weasel.Internal {
     internal class AssemblyPersistor : IAssemblyPersistor {
         /// <summary>
         ///     Saves the assembly on disk.

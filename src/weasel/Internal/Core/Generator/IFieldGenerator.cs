@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace weasel.Core.Generator {
+namespace weasel.Internal.Core.Generator {
     /// <summary>
     ///     Used to create Fields.
     /// </summary>

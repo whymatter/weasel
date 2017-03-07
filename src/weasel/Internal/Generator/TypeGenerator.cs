@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection.Emit;
-using weasel.Core;
-using weasel.Core.Generator;
-using weasel.Generator.TypeGeneratorStrategies;
+using weasel.Internal.Core;
+using weasel.Internal.Core.Generator;
+using weasel.Internal.Generator.TypeGeneratorStrategies;
 
-namespace weasel.Generator {
+namespace weasel.Internal.Generator {
     /// <summary>
     ///     Is used to generate a new Type warpping the TargetType.
     /// </summary>

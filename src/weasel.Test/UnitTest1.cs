@@ -5,7 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using weasel.Generator;
+using weasel.Internal;
+using weasel.Internal.Generator;
 
 namespace weasel.Test {
     [TestClass]
@@ -41,7 +42,7 @@ namespace weasel.Test {
             var constructorBuilder = new ConstructorGenerator();
 
             var privateFieldBuilders = configs
-                .Select(config => privateFieldGenerator.DefineField(wrappingType, config.Interceptor))
+                .Select(config => privateFieldGenerator.DefineField(wrappingType, config.InterceptorActionType))
                 .ToList();
 
             constructorBuilder.CreateConstructor(wrappingType, typeToWrap.GetConstructors().ToList(), privateFieldBuilders);
@@ -50,7 +51,7 @@ namespace weasel.Test {
                 .Select(config => new MethodGenerator.MethodGeneratorInfo(
                     config,
                     privateFieldBuilders
-                        .Single(f => f.FieldType == config.Interceptor)));
+                        .Single(f => f.FieldType == config.InterceptorActionType)));
 
             var methodGenerator = new MethodGenerator();
 
@@ -92,6 +93,22 @@ namespace weasel.Test {
             SetUp<int>
                 .CreateSetUp<Bar>()
                 .Setup(b => new Func<string, int, int>(b.abc), (a, b, c) => Debug.WriteLine($"{a}"));
+        }
+
+        public void Test(params object[] p)
+        {
+            Debug.WriteLine(p.Length);
+        }
+
+        [TestMethod]
+        public void ProxyBuilder_Success() {
+            var proxyCollection = new ProxyCollection();
+
+            var proxy = proxyCollection
+                .CreateProxy<Bar>()
+                .AfterCall(b => new System.Func<string, int, int>(b.abc), (s, i) => Debug.WriteLine($"Called with: {s}, {i}"))
+                
+                .Build(66, "Hello proxy");
         }
     }
 

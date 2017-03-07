@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Emit;
 
-namespace weasel.Core.Generator {
+namespace weasel.Internal.Core.Generator {
     /// <summary>
     ///     Generates a new <see cref="ModuleBuilder"/>.
     /// </summary>

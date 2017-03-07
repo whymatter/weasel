@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using weasel.Core.Generator;
+using weasel.Internal.Core.Generator;
 
-namespace weasel.Generator {
+namespace weasel.Internal.Generator {
     internal class MethodGenerator : IMethodGenerator {
         public void GenerateMethod(TypeBuilder typeBuilder, MethodInfo target, List<MethodGeneratorInfo> interceptors) {
             var overriddenMethod = typeBuilder
@@ -103,7 +103,7 @@ namespace weasel.Generator {
 
         private List<MethodGeneratorInfo> FilterNSortInterceptors(List<MethodGeneratorInfo> interceptors, InterceptorTypes interceptorType) {
             return interceptors
-                .Where(i => i.WeaselInterceptorConfig.InterceptorType == interceptorType)
+                .Where(i => i.WeaselInterceptorConfig.TypeOfInterceptor == interceptorType)
                 .OrderBy(i => i.WeaselInterceptorConfig.Order)
                 .ToList();
         }
